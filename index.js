@@ -1,69 +1,70 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const generateREADME = () => {
-    return`# Your-Project-Title
-    
+const generateREADME = ({ title, description, contents, usage, license, features, tests }) => {
+    return `# ${title}
 ## Description
-    
+    ${description}
 ## Table of Contents
-    
-## Installation
-    
+    ${contents}
 ## Usage
-    
-## Credits
-    
+    ${usage}
 ## License
-    
-## Badges
-    
+    ${license}
 ## Features
-    
-## Tests`
+    ${features}
+## Tests
+    ${tests}`
 }
 
 const init = () => {
     inquirer.prompt([{
         type: 'input',
-        name: 'name',
-        message: 'what is your name?',
+        name: 'title',
+        message: 'Your Project Title?',
     },
     {
         type: 'input',
-        name: 'location',
-        message: 'Where are you from?',
+        name: 'description',
+        message: 'Project Description?',
     },
     {
         type: 'input',
-        name: 'hobby',
-        message: 'What is your favorite hobby?',
+        name: 'contents',
+        message: 'Table of Contents?',
     },
     {
         type: 'input',
-        name: 'food',
-        message: 'What is your favorite food?',
+        name: 'usage',
+        message: 'Application Usage?',
     },
     {
         type: 'input',
-        name: 'github',
-        message: 'Enter your GitHub Username',
+        name: 'license',
+        message: 'License Information?',
     },
     {
         type: 'input',
-        name: 'linkedin',
-        message: 'Enter your LinkedIn URL.',
+        name: 'features',
+        message: 'Application Features?',
+    },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'Tests Used?',
     }]).then((answers) => {
         console.log(answers);
+
+        const README = generateREADME(answers);
+
+        const fileName = 'README.md';
+        fs.writeFile(fileName, README, (err) => {
+            err ? console.log(err) : console.log(`Successfully created ${fileName}`);
+
+        })
+
     });
 
-    // const html = generateHTML();
-
-    // const fileName = 'index.html';
-    // fs.writeFile(fileName, html, (err) => {
-    //      err ? console.log(err) : console.log(`Successfully created ${fileName}`);
-
-    // })
 }
 
 init();
